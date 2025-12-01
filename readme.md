@@ -1,7 +1,7 @@
 # HML 7651 : Learning and Forgetting in Text Classification  
 ### By: Manya Jain, Amith Tallanki, Suchitra Yelchuri
 
-#Can a high-dimensional linear text classifier reproduce the classic human-learning advantage of interleaved practice and the corresponding catastrophic forgetting observed under massed practice?
+Can a high-dimensional linear text classifier reproduce the classic human-learning advantage of interleaved practice and the corresponding catastrophic forgetting observed under massed practice?
 
 
 Here, we are trying to find out how training schedules affect the learning dynamics of a text classifier.  
