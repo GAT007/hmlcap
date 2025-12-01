@@ -1,5 +1,5 @@
-HML 7651 : Learning and Forgetting in Text Classification
-By: Manya Jain, Amith Tallanki, Suchitra Yelchuri
+#HML 7651 : Learning and Forgetting in Text Classification
+#By: Manya Jain, Amith Tallanki, Suchitra Yelchuri
 📘 HMLCAP — Massed vs Interleaved Learning in Text Classification
 
 This project explores how training schedules affect the learning dynamics of a text classifier.
