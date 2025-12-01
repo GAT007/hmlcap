@@ -1,146 +1,110 @@
-#HML 7651 : Learning and Forgetting in Text Classification
-#By: Manya Jain, Amith Tallanki, Suchitra Yelchuri
-📘 HMLCAP — Massed vs Interleaved Learning in Text Classification
+# HML 7651 : Learning and Forgetting in Text Classification  
+### By: Manya Jain, Amith Tallanki, Suchitra Yelchuri
 
-This project explores how training schedules affect the learning dynamics of a text classifier.
-We compare:
+---
 
-Massed practice — model sees one class at a time (blocked training)
+# 📘 HMLCAP — Massed vs Interleaved Learning in Text Classification
 
-Interleaved practice — model sees mixed classes continuously (shuffled batches)
+This project explores how **training schedules** affect the learning dynamics of a text classifier.  
+We compare two training strategies:
 
-Using the AG News Classification Dataset, we analyze not just accuracy but also how feature weights evolve during training.
+- **Massed practice** — model sees one class at a time (blocked training)  
+- **Interleaved practice** — model sees mixed classes continuously (shuffled batches)
 
-All code is contained in main.ipynb.
+Using the **AG News Classification Dataset**, we analyze not just accuracy but also how **feature weights change over time**.
 
-📂 Dataset
+All code is contained in **`main.ipynb`**.
 
-We use the AG News dataset, downloaded with kagglehub.
+---
 
-The four categories are:
+## 📂 Dataset
 
-Label	Category
-0	World
-1	Sports
-2	Business
-3	Sci/Tech
-🧹 Preprocessing
+We use the AG News dataset, downloaded with `kagglehub`.
 
-Text is prepared by concatenating each article’s title and description.
-Vectorization uses TF–IDF with:
+| Label | Category |
+|-------|----------|
+| 0     | World    |
+| 1     | Sports   |
+| 2     | Business |
+| 3     | Sci/Tech |
 
-50,000 max features
+---
 
-Unigrams + bigrams
+## 🧹 Preprocessing
 
-English stopword removal
+Text is constructed by concatenating each article’s title and description.  
+We apply **TF–IDF vectorization** with:
 
-🧠 Training Methods
+- 50,000 max features  
+- Unigrams + bigrams  
+- English stopword removal  
 
-We train an SGDClassifier (logistic regression using SGD) in two regimes:
+---
 
-Massed Practice
+## 🧠 Training Methods
 
-Data is split by class
+We train an `SGDClassifier` (logistic regression via stochastic gradient descent) in two regimes:
 
-Each epoch loops through class 0 → class 1 → class 2 → class 3
+### **Massed Practice**
+- Data is split by class  
+- Each epoch iterates: class **0 → 1 → 2 → 3**  
+- Produces large oscillations in feature weights and accuracy  
 
-Leads to heavy oscillations in model behavior
+### **Interleaved Practice**
+- Mini-batches are drawn from a fully shuffled dataset  
+- Produces stable, smooth learning curves  
 
-Interleaved Practice
+Both methods run for **5 epochs** with **batch size = 256**.
 
-Batches are drawn from a fully shuffled dataset
+---
 
-Produces stable, smooth learning curves
+## 🔍 Feature Tracking
 
-Both methods run for 5 epochs with mini-batches of 256.
+We track two types of features:
 
-🔍 Feature Tracking
+### **1. Diagnostic Words**
+Single words strongly tied to each topic:
 
-We track two types of features throughout training:
+- `government` → World  
+- `soccer` → Sports  
+- `stock` → Business  
+- `space` → Sci/Tech  
 
-1. Diagnostic Words
+### **2. Lexical Sets**
+Word groups representing each class:
 
-Representative words strongly associated with each class:
+- **World:** president, minister, war, iraq  
+- **Sports:** game, team, coach, season  
+- **Business:** market, shares, profit, company  
+- **SciTech:** research, software, space, internet  
+- **Common words:** news, said, today, new  
 
-government (World)
+We compute **average coefficient values** to study how weights stabilize.
 
-soccer (Sports)
+---
 
-stock (Business)
+# 📊 Key Results
 
-space (Sci/Tech)
+### **1. Accuracy**
+- Interleaved training reaches high accuracy quickly  
+- Massed training oscillates heavily and stabilizes slowly  
 
-2. Lexical Sets
+### **2. Diagnostic Word Coefficients**
+- Massed practice causes large swings whenever a new class block begins  
+- Interleaving leads to smooth, monotonic convergence  
 
-Groups of words representing each topic:
+### **3. Lexical Set Coefficients**
+- Massed practice shows repeated rises and crashes  
+- Interleaving produces stable and consistent values  
 
-World (e.g., “president”, “minister”, “war”)
+**Conclusion:**  
+Interleaving leads to more stable, generalizable learning — reflecting cognitive science findings on spaced practice.
 
-Sports (e.g., “game”, “team”, “coach”)
+---
 
-Business (e.g., “market”, “shares”, “profit”)
+# ▶️ How to Run the Project
 
-Sci/Tech (e.g., “research”, “software”, “space”)
-
-Common words (e.g., “news”, “said”)
-
-We compute the average coefficient value over each set to study how feature weights stabilize.
-
-📊 Key Results
-1. Accuracy
-
-Interleaved training reaches high accuracy quickly
-
-Massed practice shows strong oscillations and slower stabilization
-
-2. Diagnostic Word Coefficients
-
-Massed practice: large coefficient swings during each class block
-
-Interleaving: smooth, stable convergence
-
-3. Lexical Set Coefficients
-
-Massed: repeated rises and crashes across epochs
-
-Interleaved: consistent, monotonic stabilization
-
-These behaviors mirror known findings in cognitive science:
-interleaving promotes more stable and generalizable learning.
-
-▶️ How to Run the Project
-1. Clone the repository
+### **1. Clone the repository**
+```bash
 git clone https://github.com/GAT007/hmlcap.git
 cd hmlcap
-
-2. Install dependencies
-
-If you create a requirements.txt, use:
-
-pip install -r requirements.txt
-
-3. Run the notebook
-jupyter notebook main.ipynb
-
-🛠️ Tools & Libraries
-
-Python
-
-Scikit-learn
-
-Pandas
-
-NumPy
-
-Matplotlib
-
-KaggleHub
-
-🙌 Acknowledgments
-
-AG News dataset
-
-Scikit-learn team
-
-Research on interleaved vs massed practice
